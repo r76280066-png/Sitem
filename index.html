@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JargonSov - Resmi İndirme</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0a0a0f;
+            color: #e0e0e0;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        /* Animated background */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: 
+                radial-gradient(ellipse at 20% 50%, rgba(120, 0, 255, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 20%, rgba(0, 200, 255, 0.1) 0%, transparent 40%),
+                radial-gradient(ellipse at 60% 80%, rgba(255, 0, 150, 0.1) 0%, transparent 40%),
+                linear-gradient(180deg, #0a0a0f 0%, #12121a 100%);
+        }
+        
+        .grid-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: -1;
+            pointer-events: none;
+        }
+        
+        header {
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        
+        .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 900;
+            background: linear-gradient(90deg, #00f0ff, #ff00aa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 2px;
+        }
+        
+        .nav-links a {
+            color: #aaa;
+            text-decoration: none;
+            margin-left: 30px;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: #00f0ff;
+        }
+        
+        .hero {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 80px 40px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+        
+        .hero-content h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3.5rem;
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #fff 0%, #00f0ff 50%, #ff00aa 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .hero-content .tagline {
+            font-size: 1.3rem;
+            color: #aaa;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+        
+        .features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 40px;
+        }
+        
+        .feature-badge {
+            background: rgba(0, 240, 255, 0.1);
+            border: 1px solid rgba(0, 240, 255, 0.3);
+            padding: 8px 16px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            color: #00f0ff;
+        }
+        
+        .download-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: linear-gradient(135deg, #00f0ff, #0080ff);
+            color: #000;
+            font-weight: 700;
+            font-size: 1.2rem;
+            padding: 18px 40px;
+            border-radius: 12px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 30px rgba(0, 240, 255, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .download-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 50px rgba(0, 240, 255, 0.6);
+        }
+        
+        .download-btn svg {
+            width: 24px;
+            height: 24px;
+        }
+        
+        .version-info {
+            margin-top: 15px;
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .hero-visual {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .app-window {
+            width: 100%;
+            max-width: 420px;
+            background: linear-gradient(145deg, #1a1a2e, #16213e);
+            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.1);
+            box-shadow: 
+                0 25px 50px rgba(0,0,0,0.5),
+                0 0 80px rgba(0, 240, 255, 0.15);
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .window-header {
+            background: rgba(0,0,0,0.3);
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+        
+        .dot.red { background: #ff5f56; }
+        .dot.yellow { background: #ffbd2e; }
+        .dot.green { background: #27c93f; }
+        
+        .window-title {
+            margin-left: 10px;
+            font-size: 0.85rem;
+            color: #888;
+        }
+        
+        .window-body {
+            padding: 40px 30px;
+            text-align: center;
+        }
+        
+        .app-icon {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, #00f0ff, #ff00aa);
+            border-radius: 24px;
+            margin: 0 auto 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: #000;
+            box-shadow: 0 10px 30px rgba(0, 240, 255, 0.3);
+        }
+        
+        .app-name {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: #fff;
+        }
+        
+        .app-desc {
+            color: #888;
+            font-size: 0.95rem;
+            margin-bottom: 25px;
+        }
+        
+        .fake-ui {
+            background: rgba(0,0,0,0.3);
+            border-radius: 12px;
+            padding: 15px;
+            text-align: left;
+        }
+        
+        .fake-input {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 12px;
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .fake-btn {
+            background: linear-gradient(90deg, #00f0ff, #0080ff);
+            color: #000;
+            border: none;
+            border-radius: 8px;
+            padding: 10px;
+            width: 100%;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        
+        .glow-orb {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(0,240,255,0.2) 0%, transparent 70%);
+            filter: blur(40px);
+            z-index: -1;
+        }
+        
+        .section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 40px;
+        }
+        
+        .section-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2rem;
+            text-align: center;
+            margin-bottom: 50px;
+            background: linear-gradient(90deg, #fff, #00f0ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+        
+        .feature-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 16px;
+            padding: 30px;
+            transition: all 0.3s;
+        }
+        
+        .feature-card:hover {
+            border-color: rgba(0, 240, 255, 0.3);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+        
+        .feature-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, rgba(0,240,255,0.2), rgba(255,0,170,0.2));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+        
+        .feature-card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: #fff;
+        }
+        
+        .feature-card p {
+            color: #888;
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+        
+        .cta-section {
+            text-align: center;
+            padding: 80px 40px;
+            background: linear-gradient(180deg, transparent, rgba(0,240,255,0.05));
+        }
+        
+        .cta-section h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+        
+        .cta-section p {
+            color: #aaa;
+            margin-bottom: 40px;
+            font-size: 1.1rem;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 40px;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            color: #555;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 900px) {
+            .hero {
+                grid-template-columns: 1fr;
+                text-align: center;
+                padding: 40px 20px;
+            }
+            
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+            
+            .features {
+                justify-content: center;
+            }
+            
+            header {
+                padding: 15px 20px;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-animation"></div>
+    <div class="grid-overlay"></div>
+    
+    <header>
+        <div class="logo">JARGONSOV</div>
+        <div class="nav-links">
+            <a href="#features">Özellikler</a>
+            <a href="#download">İndir</a>
+        </div>
+    </header>
+    
+    <section class="hero">
+        <div class="hero-content">
+            <h1>JargonSov</h1>
+            <p class="tagline">
+                Modern, hızlı ve güçlü masaüstü uygulaması. 
+                CustomTkinter ile tasarlanmış profesyonel arayüz.
+            </p>
+            
+            <div class="features">
+                <span class="feature-badge">⚡ Hızlı</span>
+                <span class="feature-badge">🎨 Modern UI</span>
+                <span class="feature-badge">🔒 Güvenli</span>
+                <span class="feature-badge">💻 Windows</span>
+            </div>
+            
+            <a href="jargonSov.exe" class="download-btn" id="download" download>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+                </svg>
+                Hemen İndir
+            </a>
+            <p class="version-info">Windows için • 33 MB • Ücretsiz</p>
+        </div>
+        
+        <div class="hero-visual">
+            <div class="glow-orb"></div>
+            <div class="app-window">
+                <div class="window-header">
+                    <div class="dot red"></div>
+                    <div class="dot yellow"></div>
+                    <div class="dot green"></div>
+                    <span class="window-title">JargonSov</span>
+                </div>
+                <div class="window-body">
+                    <div class="app-icon">JS</div>
+                    <div class="app-name">JargonSov</div>
+                    <div class="app-desc">Profesyonel masaüstü deneyimi</div>
+                    <div class="fake-ui">
+                        <div class="fake-input">Giriş yapın veya başlayın...</div>
+                        <button class="fake-btn">Başlat</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="section" id="features">
+        <h2 class="section-title">Neden JargonSov?</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">🚀</div>
+                <h3>Yüksek Performans</h3>
+                <p>Optimize edilmiş Python altyapısı ile hızlı ve akıcı çalışma deneyimi sunar.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🎨</div>
+                <h3>Modern Arayüz</h3>
+                <p>CustomTkinter ile tasarlanmış şık, koyu temalı ve kullanıcı dostu arayüz.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📦</div>
+                <h3>Tek Dosya</h3>
+                <p>Kurulum gerektirmez. İndir, çalıştır, kullan. Hepsi bu kadar basit.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🛡️</div>
+                <h3>Güvenilir</h3>
+                <p>PyInstaller ile paketlenmiş, stabil ve güvenilir bir uygulama.</p>
+            </div>
+        </div>
+    </section>
+    
+    <section class="cta-section">
+        <h2>Hemen Deneyin</h2>
+        <p>JargonSov'u şimdi indirin ve farkı yaşayın.</p>
+        <a href="jargonSov.exe" class="download-btn" download>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+            </svg>
+            Ücretsiz İndir
+        </a>
+    </section>
+    
+    <footer>
+        <p>© 2026 JargonSov • Tüm hakları saklıdır</p>
+        <p style="margin-top: 8px; font-size: 0.8rem;">Bu bir tanıtım sayfasıdır.</p>
+    </footer>
+</body>
+</html>
